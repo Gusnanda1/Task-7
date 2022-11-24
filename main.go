@@ -12,7 +12,7 @@ import (
 
 func main() {
 	route := mux.NewRouter()
-
+	route.PathPrefix("/public/").Handler(http.StripPrefix("/public/", http.FileServer(http.Dir("./public"))))
 	route.HandleFunc("/", home).Methods("GET")
 	route.HandleFunc("/project", project).Methods("GET")
 	route.HandleFunc("/contact", contact).Methods("GET")
@@ -88,7 +88,6 @@ func Add_Project(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Start Date : " + r.PostForm.Get("start-date"))
 	fmt.Println("End Date : " + r.PostForm.Get("end-date"))
 	fmt.Println("Description : " + r.PostForm.Get("description"))
-	fmt.Println("Tecnologies : " + r.PostForm.Get("node-js"))
 
 	http.Redirect(w, r, "/", http.StatusMovedPermanently)
 }
